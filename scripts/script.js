@@ -25,6 +25,8 @@ var menuLinks = [
   ];
 
 
+console.log(Object.keys(menuLinks[1].subLinks[1]))
+
 // Part 1: Getting Started---------Recalling DOM Manipulation Part 1-------------------------------------
 
 // Part 1: Getting Started
@@ -111,7 +113,7 @@ var menuLinks = [
 
 // Part 4: Adding Menu Interaction--------------------------------------------------------------------
 // 1. Select and cache the all of the <a> elements inside of topMenuEl in a variable named topMenuLinks.
-    let topMenuLinks = document.createElement(`a`)
+    let topMenuLinks = document.querySelectorAll(`a`)
     console.log(topMenuLinks)
 
 // 2. Attach a delegated 'click' event listener to topMenuEl.
@@ -120,27 +122,33 @@ var menuLinks = [
     // Log the content of the <a> to verify the handler is working.
 
 // Now that we have references to each of these links, and a registered event listener, we will want to add a toggled "active" state to each menu item, showing whether or not it is currently selected:
-// 1. The event listener should add the active class to the <a> element that was clicked, unless it was already active, in which case it should remove it.
+    // 1. The event listener should add the active class to the <a> element that was clicked, unless it was already active, in which case it should remove it.
 
-// 2. The event listener should remove the active class from each other <a> element in topMenuLinks - whether the active class exists or not.
+    // 2. The event listener should remove the active class from each other <a> element in topMenuLinks - whether the active class exists or not.
         // Hint: Removing a non-existent class from an element does not cause an error!
 
 
-   topMenuEl.addEventListener(`click`, (e) => {
-        e.preventDefault()
-        if(e.target.localName !== `a`) return;
-        // console.log(e.target.innerText)
-    
-        // console.log(menuLinks[0])
+   topMenuEl.addEventListener(`click`, (e) => { //Add `click` event to top menu
+        e.preventDefault()  //Call the event object's preventDefault() method
+        if(e.target.localName !== `a`) return;  //Return if element clicked is not a link
+        console.log(topMenuEl) 
 
-    menuLinks.forEach(i => {
-        if(e.target.classList.contains(`active`)){
-            if(i == e.target) {
-                return;
-            }
-                else {e.target.classList.remove(`active`)
-                }
-            else{e.target.classList.add(`active`)}
-        }})})
-       
+    e.target.classList.toggle(`active`) //Add `active` class to element clicked //Single element so keep out of for loop
+    // console.log(e.target)
+
+    topMenuLinks.forEach(i => { //Looping through top menu links
+        // console.log(i)
+        if(i !== e.target){ //If element is not clicked
+                i.classList.remove(`active`)}   //Remove `active` class
+        })
+     })   
+                    
+
+// Part 5: Adding Submenu Interaction-------------------------------------------------
+
+// Within the same event listener, we want to toggle the submenu between active and non-active states. First, we will set the submenu to show or hide itself depending on the menu state:
+    // 1. Within the event listener, if the clicked <a> element does not yet have a class of "active" (it was inactive when clicked):
+        // a. If the clicked <a> element's "link" object within menuLinks has a subLinks property (all do, except for the "link" object for ABOUT), set the CSS top property of subMenuEl to 100%.
+        // b. Otherwise, set the CSS top property of subMenuEl to 0.
+            // Hint: Caching the "link" object will come in handy for passing its subLinks array later.
 
