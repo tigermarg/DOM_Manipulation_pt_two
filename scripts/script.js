@@ -25,7 +25,6 @@ var menuLinks = [
   ];
 
 
-console.log(Object.keys(menuLinks[1].subLinks[1]))
 
 // Part 1: Getting Started---------Recalling DOM Manipulation Part 1-------------------------------------
 
@@ -114,7 +113,7 @@ console.log(Object.keys(menuLinks[1].subLinks[1]))
 // Part 4: Adding Menu Interaction--------------------------------------------------------------------
 // 1. Select and cache the all of the <a> elements inside of topMenuEl in a variable named topMenuLinks.
     let topMenuLinks = document.querySelectorAll(`a`)
-    console.log(topMenuLinks)
+    // console.log(topMenuLinks)
 
 // 2. Attach a delegated 'click' event listener to topMenuEl.
     // The first line of code of the event listener function should call the event object's preventDefault() method.
@@ -133,7 +132,7 @@ console.log(Object.keys(menuLinks[1].subLinks[1]))
         if(e.target.localName !== `a`) return;  //Return if element clicked is not a link
         console.log(topMenuEl) 
 
-    e.target.classList.toggle(`active`) //Add `active` class to element clicked //Single element so keep out of for loop
+    e.target.classList.toggle(`active`) //Add `active` class to element clicked //Single element so keep outside of for loop
     // console.log(e.target)
 
     topMenuLinks.forEach(i => { //Looping through top menu links
@@ -141,14 +140,74 @@ console.log(Object.keys(menuLinks[1].subLinks[1]))
         if(i !== e.target){ //If element is not clicked
                 i.classList.remove(`active`)}   //Remove `active` class
         })
+
+    //Clicking top menu links shows submenu bar but not hiding it when clicking again //Submenu bar is also still displaying for ABOUT, which has no sublink property
+    topMenuLinks.forEach(i => { //Looping through top menu links        
+        if(i !== e.target.classList.toggle(`active`))   //If element is not `active`
+            {
+                if(i.subLinks == ` `)  //If submenu is clear,
+                    {
+                        subMenuEl.style.top = `0`   //Set CSS top property to 0 if no sublink property
+                } else {
+                        subMenuEl.style.top = `100%` //Otherwise, set CSS top property to 100% 
+                    }
+            }})
+
      })   
                     
-
-// Part 5: Adding Submenu Interaction-------------------------------------------------
+// Part 5: Adding Submenu Interaction----------------------------------------------------
 
 // Within the same event listener, we want to toggle the submenu between active and non-active states. First, we will set the submenu to show or hide itself depending on the menu state:
     // 1. Within the event listener, if the clicked <a> element does not yet have a class of "active" (it was inactive when clicked):
         // a. If the clicked <a> element's "link" object within menuLinks has a subLinks property (all do, except for the "link" object for ABOUT), set the CSS top property of subMenuEl to 100%.
         // b. Otherwise, set the CSS top property of subMenuEl to 0.
             // Hint: Caching the "link" object will come in handy for passing its subLinks array later.
+    
+    //See comments above-----
 
+
+// The submenu needs to be dynamic based on the clicked link. To facilitate that, we will create a helper function called buildSubmenu that does the following:
+    // 1. Clear the current contents of subMenuEl.
+    // 2. Iterate over the subLinks array, passed as an argument, and for each "link" object:
+        // a. Create an <a> element.
+        // b. Add an href attribute to the <a>, with the value set by the href property of the "link" object.
+        // c. Set the element's content to the value of the text property of the "link" object.
+        // d. Append the new element to the subMenuEl.
+
+     function buildSubmenu(){
+        subMenuEl.textContent = ` `;
+        subLinks.forEach(i => {
+        let subMenuLinks = document.createElement(`a`);
+        subMenuLinks.setAttribute(`href`, link.href);
+        subMenuLinks.innerContent == link.text
+        subMenuEl.appendChild(subMenuLinks)
+        })
+     }
+
+// The menu is almost complete! Now, we need to add interactions to the submenu items themselves:
+    // 1. Attach a delegated 'click' event listener to subMenuEl.
+        // The first line of code of the event listener function should call the event object's preventDefault() method.
+        // The second line of code within the function should immediately return if the element clicked was not an <a> element.
+        // Log the content of the <a> to verify the handler is working.
+    // 2. Next, the event listener should set the CSS top property of subMenuEl to 0.
+    // 3. Remove the active class from each <a> element in topMenuLinks.
+    // 4. Update the contents of mainEl, within an <h1>, to the contents of the <a> element clicked within subMenuEl.
+    // 5. If the ABOUT link is clicked, an <h1>About</h1> should be displayed.
+
+    subMenuEl.addEventListener(`click`, (e) => { //Add `click` event to top menu
+        e.preventDefault()  //Call the event object's preventDefault() method
+        if(e.target.localName !== `a`) return;  //Return if element clicked is not a link
+        console.log(subMenuEl) 
+    
+    subMenuEl.forEach(i => {
+        subMenuEl.style.top = `0`
+        topMenuLinks[i].classList.remove(`active`)
+        mainEl.innerHTML = <h1>subMenuEl.textContent</h1>
+        
+        if(topMenuLinks[0] == e.target){
+            topMenuLinks[0].textContent == <h1>About</h1>
+        }
+    
+    })
+        
+    })
