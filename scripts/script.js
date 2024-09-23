@@ -24,7 +24,7 @@ var menuLinks = [
     ]},
   ];
 
-
+// console.log(Object.keys(menuLinks[1].subLinks[1]))
 
 // Part 1: Getting Started---------Recalling DOM Manipulation Part 1-------------------------------------
 
@@ -142,20 +142,21 @@ var menuLinks = [
         })
 
     //Clicking top menu links shows submenu bar but not hiding it when clicking again //Submenu bar is also still displaying for ABOUT, which has no sublink property
+
     topMenuLinks.forEach(i => { //Looping through top menu links        
         if(i !== e.target.classList.toggle(`active`))   //If element is not `active`
             {
-                if(i.subLinks == ` `)  //If submenu is clear,
+                if(i.subLinks == `0`)  //If submenu is empty,
                     {
-                        subMenuEl.style.top = `0`   //Set CSS top property to 0 if no sublink property
+                        subMenuEl.style.top = `0`   //Set CSS top property to 0 
                 } else {
-                        subMenuEl.style.top = `100%` //Otherwise, set CSS top property to 100% 
+                        subMenuEl.style.top = `100%` //Else, set CSS top property to 100% 
                     }
             }})
 
      })   
                     
-// Part 5: Adding Submenu Interaction----------------------------------------------------
+// Part 5: Adding Submenu Interaction--------------------------------------------------------------
 
 // Within the same event listener, we want to toggle the submenu between active and non-active states. First, we will set the submenu to show or hide itself depending on the menu state:
     // 1. Within the event listener, if the clicked <a> element does not yet have a class of "active" (it was inactive when clicked):
@@ -174,13 +175,14 @@ var menuLinks = [
         // c. Set the element's content to the value of the text property of the "link" object.
         // d. Append the new element to the subMenuEl.
 
-     function buildSubmenu(){
-        subMenuEl.textContent = ` `;
-        subLinks.forEach(i => {
-        let subMenuLinks = document.createElement(`a`);
-        subMenuLinks.setAttribute(`href`, link.href);
-        subMenuLinks.innerContent == link.text
-        subMenuEl.appendChild(subMenuLinks)
+    function buildSubmenu(){   //Create helper function
+        subMenuEl.textContent = ` `;    //Clear subMenuEl
+
+    subLinks.forEach(i => { //Loop through subLinks array
+        let subMenuLinks = document.createElement(`a`); //Create <a> element
+        subMenuLinks.setAttribute(`href`, link.href); //add href attribute to <a>
+        subMenuLinks.textContent == link.text; //Set element's content to value of `link` text
+        subMenuEl.appendChild(subMenuLinks) //Append new element to subMenuEl
         })
      }
 
@@ -194,20 +196,19 @@ var menuLinks = [
     // 4. Update the contents of mainEl, within an <h1>, to the contents of the <a> element clicked within subMenuEl.
     // 5. If the ABOUT link is clicked, an <h1>About</h1> should be displayed.
 
-    subMenuEl.addEventListener(`click`, (e) => { //Add `click` event to top menu
+    subMenuEl.addEventListener(`click`, (e) => { //Add `click` event to subMenuEl
         e.preventDefault()  //Call the event object's preventDefault() method
         if(e.target.localName !== `a`) return;  //Return if element clicked is not a link
         console.log(subMenuEl) 
     
-    subMenuEl.forEach(i => {
-        subMenuEl.style.top = `0`
-        topMenuLinks[i].classList.remove(`active`)
-        mainEl.innerHTML = <h1>subMenuEl.textContent</h1>
+    subMenuEl.forEach(i => {    //Loop through subMenuEl
+        subMenuEl.style.top = `0`;  //Set CSS top propery to 0
+        topMenuLinks[i].classList.remove(`active`); //Remove `active` class from each topMenuLinks element
+        mainEl.innerHTML = subMenuEl.e.target.textContent   //Update mainEl contents to contents of <a> element clicked within subMenuEl
         
-        if(topMenuLinks[0] == e.target){
-            topMenuLinks[0].textContent == <h1>About</h1>
+        if(topMenuLinks[0] == e.target){    //If ABOUT link is clicked 
+            topMenuLinks[0].textContent == `<h1>About</h1>` //Display this
         }
-    
-    })
+        })
         
     })
