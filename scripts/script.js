@@ -24,7 +24,7 @@ var menuLinks = [
     ]},
   ];
 
-// console.log(Object.keys(menuLinks[1].subLinks[1]))
+// console.log(Object.keys(menuLinks[1].subLinks[1])) //Testing
 
 // Part 1: Getting Started---------Recalling DOM Manipulation Part 1-------------------------------------
 
@@ -141,7 +141,7 @@ var menuLinks = [
                 i.classList.remove(`active`)}   //Remove `active` class
         })
 
-    //Clicking top menu links shows submenu bar but not hiding it when clicking again //Submenu bar is also still displaying for ABOUT, which has no sublink property
+    //Toggle submenu not working properly: Clicking the top menu links will show the submenu bar but does not hide it when clicking again //Submenu bar is also still displaying for ABOUT, which has no sublink property
 
     topMenuLinks.forEach(i => { //Looping through top menu links        
         if(i !== e.target.classList.toggle(`active`))   //If element is not `active`
@@ -177,14 +177,14 @@ var menuLinks = [
 
     function buildSubmenu(){   //Create helper function
         subMenuEl.textContent = ` `;    //Clear subMenuEl
-
+    
     subLinks.forEach(i => { //Loop through subLinks array
         let subMenuLinks = document.createElement(`a`); //Create <a> element
         subMenuLinks.setAttribute(`href`, link.href); //add href attribute to <a>
         subMenuLinks.textContent == link.text; //Set element's content to value of `link` text
         subMenuEl.appendChild(subMenuLinks) //Append new element to subMenuEl
         })
-     }
+    }
 
 // The menu is almost complete! Now, we need to add interactions to the submenu items themselves:
     // 1. Attach a delegated 'click' event listener to subMenuEl.
